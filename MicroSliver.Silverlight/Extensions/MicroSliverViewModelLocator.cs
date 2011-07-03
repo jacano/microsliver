@@ -25,14 +25,8 @@ namespace MicroSliver.Silverlight.Extentions
             get
             {
                 var fullname = viewModel + ", " + assemblyName;
-                return GetViewModel(fullname);
+                return IoC.GetByType(Type.GetType(fullname, true, true));
             }
-        }
-
-        private object GetViewModel(string viewModel)
-        {
-            Type type = Type.GetType(viewModel, true, true);
-            return IoC.GetByType(type);
         }
     }
 }
