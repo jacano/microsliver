@@ -15,6 +15,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSliver.Silverlight", "MicroSliver.Silverlight\MicroSliver.Silverlight.csproj", "{BC84D4EF-715C-4D4C-80BB-9DBDA5C250FF}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MicroSliver\\MicroSliver.csproj
+		SccProjectName1 = MicroSliver
+		SccLocalPath1 = MicroSliver
+		SccProjectUniqueName2 = MicroSliverTests\\MicroSliverTests.csproj
+		SccProjectName2 = MicroSliverTests
+		SccLocalPath2 = MicroSliverTests
+		SccProjectUniqueName3 = MicroSliver.Silverlight\\MicroSliver.Silverlight.csproj
+		SccProjectName3 = MicroSliver.Silverlight
+		SccLocalPath3 = MicroSliver.Silverlight
+	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = MicroSliver.vsmdi
 	EndGlobalSection
