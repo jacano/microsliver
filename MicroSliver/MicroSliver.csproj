@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CtorInfo.cs" />
+    <Compile Include="Extensions\MicroSliverHttpApplication.cs" />
     <Compile Include="HttpRequestModule.cs" />
     <Compile Include="ICreator.cs" />
     <Compile Include="ICtorInfo.cs" />
@@ -59,6 +60,7 @@
   <ItemGroup>
     <Content Include="License.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
