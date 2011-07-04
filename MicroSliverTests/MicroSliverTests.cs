@@ -27,18 +27,18 @@ namespace TestProject1
         [TestMethod]
         public void TestShallowRequestsWithoutCreator()
         {
-            //MakeWebRequest();
-            //var ioc = new IoC();
-            //ioc.Map<IDependencyA, ClassDependencyA>().ToRequestScope();
+            MakeWebRequest();
+            var ioc = new IoC();
+            ioc.Map<IDependencyA, ClassDependencyA>().ToRequestScope();
 
-            //var classA1 = ioc.Get<ClassParentA>();
-            //var classA2 = ioc.Get<ClassParentA>();
+            var classA1 = ioc.Get<ClassParentA>();
+            var classA2 = ioc.Get<ClassParentA>();
 
             //Assert.AreEqual(classA1.A, classA2.A);
 
-            //MakeWebRequest();
+            MakeWebRequest();
 
-            //var classA3 = ioc.Get<ClassParentA>();
+            var classA3 = ioc.Get<ClassParentA>();
 
             //Assert.AreNotEqual(classA1.A, classA3.A);
         }

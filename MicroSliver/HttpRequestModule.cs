@@ -8,6 +8,14 @@ using System.Web;
 
 namespace MicroSliver
 {
+    public class PreApplicationStartCode
+    {
+        public static void Start()
+        {
+            Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(HttpRequestModule));
+        }
+    }
+
     public class HttpRequestModule : IHttpModule
     {
         private static IIoC IoC;
