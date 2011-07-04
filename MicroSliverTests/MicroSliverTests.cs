@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,6 +22,25 @@ namespace TestProject1
             var classA2 = ioc.Get<ClassParentA>();
 
             Assert.AreNotEqual(classA1.A, classA2.A);
+        }
+
+        [TestMethod]
+        public void TestShallowRequestsWithoutCreator()
+        {
+            //MakeWebRequest();
+            //var ioc = new IoC();
+            //ioc.Map<IDependencyA, ClassDependencyA>().ToRequestScope();
+
+            //var classA1 = ioc.Get<ClassParentA>();
+            //var classA2 = ioc.Get<ClassParentA>();
+
+            //Assert.AreEqual(classA1.A, classA2.A);
+
+            //MakeWebRequest();
+
+            //var classA3 = ioc.Get<ClassParentA>();
+
+            //Assert.AreNotEqual(classA1.A, classA3.A);
         }
 
         [TestMethod]
@@ -147,6 +167,13 @@ namespace TestProject1
 
             Assert.AreNotEqual(classC1.C, classC2.C);
             Assert.AreEqual(classC1.C.E, classC2.C.E);
+        }
+
+        public void MakeWebRequest()
+        {
+            var request = new HttpRequest("", "http://www.w3.org", string.Empty);
+            var response = new HttpResponse(new System.IO.StringWriter());
+            HttpContext.Current = new HttpContext(request, response);
         }
     }
 

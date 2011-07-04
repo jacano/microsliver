@@ -6,9 +6,6 @@
 // 
 using System;
 using System.Collections.Generic;
-#if !SILVERLIGHT
-using System.Web;
-#endif
 
 namespace MicroSliver
 {
@@ -41,7 +38,9 @@ namespace MicroSliver
             _cachedSingletons = new Dictionary<Type, object>();
             _cachedRequests = new Dictionary<Type, object>();
 
-            SetApplicationInstnace();
+#if !SILVERLIGHT
+            HttpRequestModule.ManageIoC(this);
+#endif
         }
 
         public IMap Map<TContract, TConcrete>()
@@ -70,6 +69,26 @@ namespace MicroSliver
             _cachedCtors.Clear();
             _cachedSingletons.Clear();
             _cachedRequests.Clear();
+        }
+
+        public void ClearRequests()
+        {
+            _cachedRequests.Clear();
+        }
+
+        public IEnumerable<IMap> GetMappings()
+        {
+            return _mappings.Values;
+        }
+
+        public IMap GetMap<TContract>()
+        {
+            var contract = typeof(TContract);
+            if (_mappings.ContainsKey(contract))
+            {
+                return _mappings[contract];
+            }
+            return null;
         }
 
         public T Get<T>()
@@ -186,18 +205,6 @@ namespace MicroSliver
                 var concreteCtorParams = concreteCtor.GetParameters();
                 _cachedCtors.Add(T, new CtorInfo(concreteCtor, concreteCtorParams));
             }
-        }
-
-        private void SetApplicationInstnace()
-        {
-#if !SILVERLIGHT
-            if (HttpContext.Current != null)
-            {
-                HttpContext.Current.ApplicationInstance.EndRequest += (sender, e) => {
-                    _cachedRequests.Clear();
-                };// new EventHandler(ApplicationInstance_EndRequest);
-            }
-#endif
         }
 
         #endregion

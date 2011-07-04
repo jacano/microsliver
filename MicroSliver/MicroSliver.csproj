@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CtorInfo.cs" />
+    <Compile Include="HttpRequestModule.cs" />
     <Compile Include="ICreator.cs" />
     <Compile Include="ICtorInfo.cs" />
     <Compile Include="IIoC.cs" />
