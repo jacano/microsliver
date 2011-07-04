@@ -11,7 +11,7 @@ namespace MicroSliver.Web.Extensions
     public abstract class MicroSliverHttpApplication : HttpApplication
     {
         private static IIoC _ioc;
-        public IIoC IoC
+        public static IIoC IoC
         {
             get
             {
