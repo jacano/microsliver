@@ -6,6 +6,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MicroSliver
 {
@@ -140,20 +141,8 @@ namespace MicroSliver
                     throw new Exception("MicroSliver is unable to map interface of type " + T.Name + ".");
                 }
             }
-
             CacheCtorInfo(T);
-            var ctorInfo = _cachedCtors[T];
-
-            if (ctorInfo.CtorParams.Length == 0)
-                return Activator.CreateInstance(T);
-
-            var parameters = new List<object>(ctorInfo.CtorParams.Length);
-            foreach (var param in ctorInfo.CtorParams)
-            {
-                parameters.Add(Get(param.ParameterType));
-            }
-
-            return ctorInfo.Ctor.Invoke(parameters.ToArray());
+            return ProcessCtor(_cachedCtors[T]);
         }
 
         private object ProcessScope(Type T, IMap map)
@@ -205,6 +194,12 @@ namespace MicroSliver
                 var concreteCtorParams = concreteCtor.GetParameters();
                 _cachedCtors.Add(T, new CtorInfo(concreteCtor, concreteCtorParams));
             }
+        }
+
+        private object ProcessCtor(ICtorInfo ctorInfo)
+        {
+            var parms = from p in ctorInfo.CtorParams select Get(p.ParameterType);
+            return ctorInfo.Ctor.Invoke(parms.ToArray());
         }
 
         #endregion
