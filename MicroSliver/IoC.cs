@@ -40,7 +40,7 @@ namespace MicroSliver
             _cachedRequests = new Dictionary<Type, object>();
 
 #if !SILVERLIGHT
-            HttpRequestModule.ManageIoC(this);
+            MicroSliverHttpRequestModule.ManageIoC(this);
 #endif
         }
 

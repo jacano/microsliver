@@ -4,7 +4,6 @@
 // 
 // Licensed under the Microsoft Public License (Ms-PL).
 // 
-using System;
 using System.Web;
 
 namespace MicroSliver.Web.Extensions
@@ -20,9 +19,11 @@ namespace MicroSliver.Web.Extensions
             }
         }
 
-        public void LoadIoC(IIoC ioc)
+        public override void Init()
         {
-            _ioc = ioc;
+            _ioc = LoadIIoC();
         }
+
+        protected abstract IIoC LoadIIoC();
     }
 }

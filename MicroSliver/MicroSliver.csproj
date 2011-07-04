@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="CtorInfo.cs" />
     <Compile Include="Extensions\MicroSliverHttpApplication.cs" />
-    <Compile Include="HttpRequestModule.cs" />
+    <Compile Include="MicroSliverHttpRequestModule.cs" />
     <Compile Include="ICreator.cs" />
     <Compile Include="ICtorInfo.cs" />
     <Compile Include="IIoC.cs" />

@@ -12,21 +12,16 @@ namespace MicroSliver
     {
         public static void Start()
         {
-            Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(HttpRequestModule));
+            Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(MicroSliverHttpRequestModule));
         }
     }
 
-    public class HttpRequestModule : IHttpModule
+    public class MicroSliverHttpRequestModule : IHttpModule
     {
         private static IIoC IoC;
         public void Init(HttpApplication context)
         {
             context.EndRequest += new System.EventHandler(ClearRequests);
-        }
-
-        public void Dispose()
-        {
-            
         }
 
         public static void ManageIoC(IIoC ioc)
@@ -37,6 +32,10 @@ namespace MicroSliver
         private static void ClearRequests(object sender, System.EventArgs e)
         {
             IoC.ClearRequests();
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
