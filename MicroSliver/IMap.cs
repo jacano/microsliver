@@ -10,8 +10,11 @@ namespace MicroSliver
 {
     public interface IMap
     {
-        Type Concrete { get; set; }
-        Scope Scope { get; set; }
-        ICreator Creator { get; set; }
+        Type Concrete { get; }
+        Scope Scope { get; }
+        ICreator Creator { get; }
+
+        void ToSingletonScope();
+        void ToInstanceScope();
     }
 }

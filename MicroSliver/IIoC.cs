@@ -10,10 +10,8 @@ namespace MicroSliver
 {
     public interface IIoC
     {
-        void Map<TContract, TConcrete>();
-        void Map<TContract>(ICreator creator);
-        void MapToSingleton<TContract, TConcrete>();
-        void MapToSingleton<TContract>(ICreator creator);
+        IMap Map<TContract, TConcrete>();
+        IMap Map<TContract>(ICreator creator);
         void UnMap<TContract>();
         void Clear();
         T Get<T>();

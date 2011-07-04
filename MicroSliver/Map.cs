@@ -10,20 +10,31 @@ namespace MicroSliver
 {
     public class Map : IMap
     {
-        public Type Concrete { get; set; }
-        public Scope Scope { get; set; }
-        public ICreator Creator { get; set; }
+        public Type Concrete { get; private set; }
+        public Scope Scope { get; private set; }
+        public ICreator Creator { get; private set; }
 
-        public Map(Type concrete, Scope scope)
+        public Map(Type concrete)
         {
             Concrete = concrete;
-            Scope = scope;
+            Scope = Scope.Instance;
         }
 
-        public Map(Type concrete, Scope scope, ICreator creator)
-            : this(concrete, scope)
+        public Map(Type concrete, ICreator creator)
+            : this(concrete)
         {
             Creator = creator;
         }
+
+        public void ToSingletonScope()
+        {
+            Scope = MicroSliver.Scope.Singleton;
+        }
+
+        public void ToInstanceScope()
+        {
+            Scope = MicroSliver.Scope.Instance;
+        }
+
     }
 }

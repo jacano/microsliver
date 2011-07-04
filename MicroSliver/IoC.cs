@@ -36,24 +36,14 @@ namespace MicroSliver
             _cachedSingletons = new Dictionary<Type, object>();
         }
 
-        public void Map<TContract, TConcrete>()
+        public IMap Map<TContract, TConcrete>()
         {
-            AddMap<TContract, TConcrete>(Scope.Instance);
+            return AddMap<TContract, TConcrete>();
         }
 
-        public void Map<TContract>(ICreator creator)
+        public IMap Map<TContract>(ICreator creator)
         {
-            AddMap<TContract>(Scope.Instance, creator);
-        }
-
-        public void MapToSingleton<TContract, TConcrete>()
-        {
-            AddMap<TContract, TConcrete>(Scope.Singleton);
-        }
-
-        public void MapToSingleton<TContract>(ICreator creator)
-        {
-            AddMap<TContract>(Scope.Singleton, creator);
+            return AddMap<TContract>(creator);
         }
 
         public void UnMap<TContract>()
@@ -87,23 +77,25 @@ namespace MicroSliver
 
         #region Infrastructure
 
-        private void AddMap<TContract, TConcrete>(Scope scope)
+        private IMap AddMap<TContract, TConcrete>()
         {
             var contract = typeof(TContract);
             var concrete = typeof(TConcrete);
             if (!_mappings.ContainsKey(contract))
             {
-                _mappings[contract] = new Map(concrete, scope);
+                _mappings[contract] = new Map(concrete);
             }
+            return _mappings[contract];
         }
 
-        private void AddMap<TContract>(Scope scope, ICreator creator)
+        private IMap AddMap<TContract>(ICreator creator)
         {
             var contract = typeof(TContract);
             if (!_mappings.ContainsKey(contract))
             {
-                _mappings[contract] = new Map(null, scope, creator);
+                _mappings[contract] = new Map(null, creator);
             }
+            return _mappings[contract];
         }
 
         private object Get(Type T)

@@ -27,7 +27,7 @@ namespace TestProject1
         public void TestShallowSingletonsWithoutCreator()
         {
             var ioc = new IoC();
-            ioc.MapToSingleton<IDependencyA, ClassDependencyA>();
+            ioc.Map<IDependencyA, ClassDependencyA>().ToSingletonScope();
 
             var classA1 = ioc.Get<ClassParentA>();
             var classA2 = ioc.Get<ClassParentA>();
@@ -54,8 +54,8 @@ namespace TestProject1
         public void TestShallowMultipleSingletonsWithoutCreator()
         {
             var ioc = new IoC();
-            ioc.MapToSingleton<IDependencyA, ClassDependencyA>();
-            ioc.MapToSingleton<IDependencyB, ClassDependencyB>();
+            ioc.Map<IDependencyA, ClassDependencyA>().ToSingletonScope();
+            ioc.Map<IDependencyB, ClassDependencyB>().ToSingletonScope();
 
             var classB1 = ioc.Get<ClassParentB>();
             var classB2 = ioc.Get<ClassParentB>();
@@ -68,8 +68,8 @@ namespace TestProject1
         public void TestShallowMultipleSingletonsWithCreator()
         {
             var ioc = new IoC();
-            ioc.MapToSingleton<IDependencyA>(new ClassDependencyACreator());
-            ioc.MapToSingleton<IDependencyB>(new ClassDependencyBCreator());
+            ioc.Map<IDependencyA>(new ClassDependencyACreator()).ToSingletonScope();
+            ioc.Map<IDependencyB>(new ClassDependencyBCreator()).ToSingletonScope();
 
             var classB1 = ioc.Get<ClassParentB>();
             var classB2 = ioc.Get<ClassParentB>();
@@ -82,7 +82,7 @@ namespace TestProject1
         public void TestShallowMultipleDifferentsWithCreator()
         {
             var ioc = new IoC();
-            ioc.MapToSingleton<IDependencyA>(new ClassDependencyACreator());
+            ioc.Map<IDependencyA>(new ClassDependencyACreator()).ToSingletonScope();
             ioc.Map<IDependencyB>(new ClassDependencyBCreator());
 
             var classB1 = ioc.Get<ClassParentB>();
@@ -111,8 +111,8 @@ namespace TestProject1
         public void TestDeepSingleSingletonsWithoutCreator()
         {
             var ioc = new IoC();
-            ioc.MapToSingleton<IDependencyC, ClassDependencyC>();
-            ioc.MapToSingleton<IDependencyE, ClassDependencyE>();
+            ioc.Map<IDependencyC, ClassDependencyC>().ToSingletonScope();
+            ioc.Map<IDependencyE, ClassDependencyE>().ToSingletonScope();
 
             var classC1 = ioc.Get<ClassParentC>();
             var classC2 = ioc.Get<ClassParentC>();
@@ -125,8 +125,8 @@ namespace TestProject1
         public void TestDeepSingleSingletonsWithCreator()
         {
             var ioc = new IoC();
-            ioc.MapToSingleton<IDependencyC, ClassDependencyC>();
-            ioc.MapToSingleton<IDependencyE>(new ClassDependencyECreator());
+            ioc.Map<IDependencyC, ClassDependencyC>().ToSingletonScope();
+            ioc.Map<IDependencyE>(new ClassDependencyECreator()).ToSingletonScope();
 
             var classC1 = ioc.Get<ClassParentC>();
             var classC2 = ioc.Get<ClassParentC>();
@@ -140,7 +140,7 @@ namespace TestProject1
         {
             var ioc = new IoC();
             ioc.Map<IDependencyC, ClassDependencyC>();
-            ioc.MapToSingleton<IDependencyE>(new ClassDependencyECreator());
+            ioc.Map<IDependencyE>(new ClassDependencyECreator()).ToSingletonScope();
 
             var classC1 = ioc.Get<ClassParentC>();
             var classC2 = ioc.Get<ClassParentC>();
