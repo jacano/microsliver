@@ -6,6 +6,9 @@
 // 
 using System;
 using System.Collections.Generic;
+#if !SILVERLIGHT
+using System.Web;
+#endif
 
 namespace MicroSliver
 {
@@ -25,6 +28,7 @@ namespace MicroSliver
         private readonly IDictionary<Type, IMap> _mappings;
         private readonly IDictionary<Type, ICtorInfo> _cachedCtors;
         private readonly IDictionary<Type, object> _cachedSingletons;
+        private readonly IDictionary<Type, object> _cachedRequests;
 
         #endregion
 
@@ -35,6 +39,9 @@ namespace MicroSliver
             _mappings = new Dictionary<Type, IMap>();
             _cachedCtors = new Dictionary<Type, ICtorInfo>();
             _cachedSingletons = new Dictionary<Type, object>();
+            _cachedRequests = new Dictionary<Type, object>();
+
+            SetApplicationInstnace();
         }
 
         public IMap Map<TContract, TConcrete>()
@@ -62,6 +69,7 @@ namespace MicroSliver
             _mappings.Clear();
             _cachedCtors.Clear();
             _cachedSingletons.Clear();
+            _cachedRequests.Clear();
         }
 
         public T Get<T>()
@@ -118,12 +126,9 @@ namespace MicroSliver
             var ctorInfo = _cachedCtors[T];
 
             if (ctorInfo.CtorParams.Length == 0)
-            {
                 return Activator.CreateInstance(T);
-            }
 
-            List<object> parameters = new List<object>(ctorInfo.CtorParams.Length);
-
+            var parameters = new List<object>(ctorInfo.CtorParams.Length);
             foreach (var param in ctorInfo.CtorParams)
             {
                 parameters.Add(Get(param.ParameterType));
@@ -155,6 +160,19 @@ namespace MicroSliver
                         }
                     }
                     return _cachedSingletons[T];
+                case Scope.Request:
+                    if (!_cachedRequests.ContainsKey(T))
+                    {
+                        if (map.Creator != null)
+                        {
+                            _cachedRequests.Add(T, map.Creator.Create());
+                        }
+                        else
+                        {
+                            _cachedRequests.Add(T, Get(_mappings[T].Concrete));
+                        }
+                    }
+                    return _cachedRequests[T];
                 default:
                     return null;
             }
@@ -168,6 +186,18 @@ namespace MicroSliver
                 var concreteCtorParams = concreteCtor.GetParameters();
                 _cachedCtors.Add(T, new CtorInfo(concreteCtor, concreteCtorParams));
             }
+        }
+
+        private void SetApplicationInstnace()
+        {
+#if !SILVERLIGHT
+            if (HttpContext.Current != null)
+            {
+                HttpContext.Current.ApplicationInstance.EndRequest += (sender, e) => {
+                    _cachedRequests.Clear();
+                };// new EventHandler(ApplicationInstance_EndRequest);
+            }
+#endif
         }
 
         #endregion

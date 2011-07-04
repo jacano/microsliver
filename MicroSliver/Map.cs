@@ -38,7 +38,7 @@ namespace MicroSliver
 
         public void ToRequestScope()
         {
-            Scope = MicroSliver.Scope.Instance;
+            Scope = MicroSliver.Scope.Request;
         }
 
     }

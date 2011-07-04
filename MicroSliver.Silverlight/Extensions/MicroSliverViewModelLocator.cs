@@ -14,10 +14,10 @@ namespace MicroSliver.Silverlight.Extentions
         private static IIoC IoC;
         private string assemblyName;
 
-        public void LoadIoC(IIoC ioc, string ExecutingAssemblyName)
+        public void LoadIoC(IIoC ioc, Assembly ExecutingAssembly)
         {
             IoC = ioc;
-            assemblyName = ExecutingAssemblyName;
+            assemblyName = ExecutingAssembly.FullName;
         }
 
         public object this[string viewModel]
