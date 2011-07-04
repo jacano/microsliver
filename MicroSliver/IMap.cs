@@ -16,5 +16,7 @@ namespace MicroSliver
 
         void ToSingletonScope();
         void ToInstanceScope();
+        void ToRequestScope();
+
     }
 }

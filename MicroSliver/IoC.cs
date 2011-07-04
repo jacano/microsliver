@@ -13,7 +13,8 @@ namespace MicroSliver
     public enum Scope
     {
         Instance,
-        Singleton
+        Singleton,
+        Request
     }
 
     public class IoC : IIoC

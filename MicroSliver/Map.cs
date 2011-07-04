@@ -36,5 +36,10 @@ namespace MicroSliver
             Scope = MicroSliver.Scope.Instance;
         }
 
+        public void ToRequestScope()
+        {
+            Scope = MicroSliver.Scope.Instance;
+        }
+
     }
 }
