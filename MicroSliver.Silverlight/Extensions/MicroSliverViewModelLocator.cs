@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace MicroSliver.Silverlight.Extentions
 {
-    public class MicroSliverViewModelLocator
+    public abstract class MicroSliverViewModelLocator
     {
         private static IIoC IoC;
         private string assemblyName;
