@@ -7,16 +7,23 @@
 using System;
 using System.Reflection;
 
-namespace MicroSliver.Silverlight.Extentions
+namespace MicroSliver.Silverlight.Extensions
 {
     public abstract class MicroSliverViewModelLocator
     {
-        private static IIoC IoC;
         private string assemblyName;
+        private static IIoC _ioc;
+        public IIoC IoC
+        {
+            get
+            {
+                return _ioc;
+            }
+        }
 
         public void LoadIoC(IIoC ioc, Assembly ExecutingAssembly)
         {
-            IoC = ioc;
+            _ioc = ioc;
             assemblyName = ExecutingAssembly.FullName;
         }
 
