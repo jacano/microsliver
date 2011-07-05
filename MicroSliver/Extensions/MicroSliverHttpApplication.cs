@@ -4,7 +4,9 @@
 // 
 // Licensed under the Microsoft Public License (Ms-PL).
 // 
+using System;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MicroSliver.Web.Extensions
 {
@@ -22,8 +24,18 @@ namespace MicroSliver.Web.Extensions
         public override void Init()
         {
             _ioc = LoadIIoC();
+            ControllerBuilder.Current.SetControllerFactory(new MicroSliverControllerFactory(_ioc));
         }
 
         protected abstract IIoC LoadIIoC();
+        protected abstract void Application_Start();
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            Application_Start();
+        }
+
     }
+
+
 }
