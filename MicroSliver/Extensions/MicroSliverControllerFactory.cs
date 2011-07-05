@@ -20,11 +20,17 @@ namespace MicroSliver.Web.Extensions
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
+            if (controllerType == null)
+            {
+                return base.GetControllerInstance(requestContext, controllerType);
+            }
+
             var controller = (IController)IoC.GetByType(controllerType);
             if (controller == null)
             {
                 return base.GetControllerInstance(requestContext, controllerType);
             }
+
             return controller;
         }
     }
