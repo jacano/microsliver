@@ -141,6 +141,10 @@ namespace MicroSliver
                     throw new Exception("MicroSliver is unable to map interface of type " + T.Name + ".");
                 }
             }
+            else if (T.IsPrimitive || T.IsValueType)
+            {
+                throw new Exception("MicroSliver is unable to set values to primitive/value types in the constructor.");
+            }
             CacheCtorInfo(T);
             return ProcessCtor(_cachedCtors[T]);
         }
