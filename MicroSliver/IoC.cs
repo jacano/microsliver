@@ -18,6 +18,9 @@ namespace MicroSliver
         Request
     }
 
+    /// <summary>
+    /// Defines the MicroSliver container that manages mappings and instantiations.
+    /// </summary>
     public class IoC : IIoC
     {
 
@@ -44,16 +47,41 @@ namespace MicroSliver
 #endif
         }
 
+        /// <summary>
+        /// Creates a mapping
+        /// </summary>
         public IMap Map<TContract, TConcrete>()
         {
             return AddMap<TContract, TConcrete>();
         }
 
+        /// <summary>
+        /// Creates a mapping that specifies a ICreator object.
+        /// </summary>
         public IMap Map<TContract>(ICreator creator)
         {
             return AddMap<TContract>(creator);
         }
 
+        /// <summary>
+        /// Gets an instance of the object.
+        /// </summary>
+        public T Get<T>()
+        {
+            return (T)Get(typeof(T));
+        }
+
+        /// <summary>
+        /// Gets an instance of the object by Type.
+        /// </summary>
+        public object GetByType(Type T)
+        {
+            return Get(T);
+        }
+
+        /// <summary>
+        /// Removes a specific mapping.
+        /// </summary>
         public void UnMap<TContract>()
         {
             var contract = typeof(TContract);
@@ -64,24 +92,9 @@ namespace MicroSliver
             }
         }
 
-        public void Clear()
-        {
-            _mappings.Clear();
-            _cachedCtors.Clear();
-            _cachedSingletons.Clear();
-            _cachedRequests.Clear();
-        }
-
-        public void ClearRequests()
-        {
-            _cachedRequests.Clear();
-        }
-
-        public IEnumerable<IMap> GetMappings()
-        {
-            return _mappings.Values;
-        }
-
+        /// <summary>
+        /// Returns a specific mapping.
+        /// </summary>
         public IMap GetMap<TContract>()
         {
             var contract = typeof(TContract);
@@ -92,14 +105,31 @@ namespace MicroSliver
             return null;
         }
 
-        public T Get<T>()
+        /// <summary>
+        /// Clears all mappings and caches.
+        /// </summary>
+        public void Clear()
         {
-            return (T)Get(typeof(T));
+            _mappings.Clear();
+            _cachedCtors.Clear();
+            _cachedSingletons.Clear();
+            _cachedRequests.Clear();
         }
 
-        public object GetByType(Type T)
+        /// <summary>
+        /// Clears web request cache.
+        /// </summary>
+        public void ClearRequests()
         {
-            return Get(T);
+            _cachedRequests.Clear();
+        }
+
+        /// <summary>
+        /// Returns all mappings.
+        /// </summary>
+        public IEnumerable<IMap> GetMappings()
+        {
+            return _mappings.Values;
         }
 
         #endregion
