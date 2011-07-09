@@ -17,7 +17,7 @@ namespace MicroSliver
         /// <summary>
         /// Creates a mapping
         /// </summary>
-        IMap Map<TContract, TConcrete>();
+        IMap Map<TContract, TConcrete>() where TConcrete : TContract;
         /// <summary>
         /// Creates a mapping that specifies a ICreator object.
         /// </summary>

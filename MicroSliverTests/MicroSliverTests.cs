@@ -169,27 +169,37 @@ namespace TestProject1
             Assert.AreEqual(classC1.C.E, classC2.C.E);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception))]
+        public void TestMultipleMappings()
+        {
+            var ioc = new IoC();
+            ioc.Map<IDependencyA, ClassDependencyA>();
+            ioc.Map<IDependencyA, ClassDependencyA1>();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception))]
+        public void TestMissingMapping()
+        {
+            var ioc = new IoC();
+            ioc.Get<IDependencyA>();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception))]
+        public void TestClassWithPrimitiveValues()
+        {
+            var ioc = new IoC();
+            ioc.Get<ClassWithPrimitiveArguments>();
+        }
+
         public void MakeWebRequest()
         {
             var request = new HttpRequest("", "http://www.w3.org", string.Empty);
             var response = new HttpResponse(new System.IO.StringWriter());
             HttpContext.Current = new HttpContext(request, response);
         }
-
-        //[TestMethod]
-        //public void TestPerformance()
-        //{
-        //    var ioc = new IoC();
-        //    ioc.Map<IDependencyA, ClassDependencyA>();
-
-        //    var startTime = DateTime.Now;
-        //    for (int i = 0; i <= 10000; i++)
-        //    {
-        //        var classA1 = ioc.Get<ClassParentA>();
-        //    }
-        //    var endTime = DateTime.Now;
-        //    var diff = endTime.Subtract(startTime);
-        //}
     }
 
     public class ClassDependencyACreator : ICreator

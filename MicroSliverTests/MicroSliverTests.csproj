@@ -53,12 +53,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MicroSliverTests.cs" />
     <Compile Include="TestClasses\ClassDependencyA.cs" />
+    <Compile Include="TestClasses\ClassDependencyA1.cs" />
     <Compile Include="TestClasses\ClassDependencyB.cs" />
     <Compile Include="TestClasses\ClassDependencyC.cs" />
     <Compile Include="TestClasses\ClassDependencyE.cs" />
     <Compile Include="TestClasses\ClassParentA.cs" />
     <Compile Include="TestClasses\ClassParentB.cs" />
     <Compile Include="TestClasses\ClassParentC.cs" />
+    <Compile Include="TestClasses\ClassWithoutConstructor.cs" />
+    <Compile Include="TestClasses\ClassWithPrimitiveArguments.cs" />
     <Compile Include="TestClasses\IDependencyA.cs" />
     <Compile Include="TestClasses\IDependencyB.cs" />
     <Compile Include="TestClasses\IDependencyC.cs" />

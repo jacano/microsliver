@@ -50,7 +50,7 @@ namespace MicroSliver
         /// <summary>
         /// Creates a mapping
         /// </summary>
-        public IMap Map<TContract, TConcrete>()
+        public IMap Map<TContract, TConcrete>() where TConcrete : TContract
         {
             return AddMap<TContract, TConcrete>();
         }
@@ -102,7 +102,7 @@ namespace MicroSliver
             {
                 return _mappings[contract];
             }
-            return null;
+            throw new Exception("MicroSliver is unable to find a mapping for interface of type " + contract.Name + ".");
         }
 
         /// <summary>
@@ -169,22 +169,29 @@ namespace MicroSliver
         {
             if (T.IsInterface)
             {
-                if (_mappings.ContainsKey(T))
+                try
                 {
                     var map = _mappings[T];
                     return (ProcessScope(T, map));
                 }
-                else
+                catch (KeyNotFoundException ex)
                 {
-                    throw new Exception("MicroSliver is unable to map interface of type " + T.Name + ".");
+                    throw new Exception("MicroSliver does not have a mapping for interface of type " + T.Name + ".", ex);
                 }
             }
             else if (T.IsPrimitive || T.IsValueType)
             {
                 throw new Exception("MicroSliver is unable to set values to primitive/value types in the constructor.");
             }
+
             CacheCtorInfo(T);
-            return ProcessCtor(_cachedCtors[T]);
+            var ctor = _cachedCtors[T];
+            if (ctor.CtorParams.Length == 0)
+            {
+                return ctor.Ctor.Invoke(null);
+            }
+
+            return ProcessCtor(ctor);
         }
 
         private object ProcessScope(Type T, IMap map)
@@ -196,7 +203,7 @@ namespace MicroSliver
                     {
                         return map.Creator.Create();
                     }
-                    return Get(_mappings[T].Concrete);
+                    return Get(map.Concrete);
                 case Scope.Singleton:
                     if (!_cachedSingletons.ContainsKey(T))
                     {
@@ -206,7 +213,7 @@ namespace MicroSliver
                         }
                         else
                         {
-                            _cachedSingletons.Add(T, Get(_mappings[T].Concrete));
+                            _cachedSingletons.Add(T, Get(map.Concrete));
                         }
                     }
                     return _cachedSingletons[T];
@@ -219,7 +226,7 @@ namespace MicroSliver
                         }
                         else
                         {
-                            _cachedRequests.Add(T, Get(_mappings[T].Concrete));
+                            _cachedRequests.Add(T, Get(map.Concrete));
                         }
                     }
                     return _cachedRequests[T];
