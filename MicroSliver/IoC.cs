@@ -144,6 +144,10 @@ namespace MicroSliver
             {
                 _mappings[contract] = new Map(concrete);
             }
+            else
+            {
+                throw new Exception("A mapping for interface of type " + contract.Name + " already exists.  MicroSliver does not allow for multiple bindings of the same type.");
+            }
             return _mappings[contract];
         }
 
@@ -153,6 +157,10 @@ namespace MicroSliver
             if (!_mappings.ContainsKey(contract))
             {
                 _mappings[contract] = new Map(null, creator);
+            }
+            else
+            {
+                throw new Exception("A mapping for interface of type " + contract.Name + " already exists.  MicroSliver does not allow for multiple bindings of the same type.");
             }
             return _mappings[contract];
         }

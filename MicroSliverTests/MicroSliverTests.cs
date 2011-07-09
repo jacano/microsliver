@@ -175,6 +175,21 @@ namespace TestProject1
             var response = new HttpResponse(new System.IO.StringWriter());
             HttpContext.Current = new HttpContext(request, response);
         }
+
+        //[TestMethod]
+        //public void TestPerformance()
+        //{
+        //    var ioc = new IoC();
+        //    ioc.Map<IDependencyA, ClassDependencyA>();
+
+        //    var startTime = DateTime.Now;
+        //    for (int i = 0; i <= 10000; i++)
+        //    {
+        //        var classA1 = ioc.Get<ClassParentA>();
+        //    }
+        //    var endTime = DateTime.Now;
+        //    var diff = endTime.Subtract(startTime);
+        //}
     }
 
     public class ClassDependencyACreator : ICreator
