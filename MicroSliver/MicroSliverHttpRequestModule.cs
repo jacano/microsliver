@@ -43,7 +43,10 @@ namespace MicroSliver
         /// </summary>
         private static void ClearRequests(object sender, System.EventArgs e)
         {
-            IoC.ClearRequests();
+            if (IoC != null)
+            {
+                IoC.ClearRequests();
+            }
         }
 
         public void Dispose()
