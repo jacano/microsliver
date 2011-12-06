@@ -231,8 +231,8 @@ namespace MicroSliver
                                 _cachedSingletons.Add(T, Get(map.Concrete));
                             }
                         }
+                        return _cachedSingletons[T];
                     }
-                    return _cachedSingletons[T];
                 case Scope.Request:
                     lock (_lock)
                     {
@@ -247,8 +247,9 @@ namespace MicroSliver
                                 _cachedRequests.Add(T, Get(map.Concrete));
                             }
                         }
+
+                        return _cachedRequests[T];
                     }
-                    return _cachedRequests[T];
                 default:
                     return null;
             }
