@@ -30,6 +30,7 @@ namespace MicroSliver
         private readonly IDictionary<Type, ICtorInfo> _cachedCtors;
         private readonly IDictionary<Type, object> _cachedSingletons;
         private readonly IDictionary<Type, object> _cachedRequests;
+        private readonly object _lock;
 
         #endregion
 
@@ -41,6 +42,7 @@ namespace MicroSliver
             _cachedCtors = new Dictionary<Type, ICtorInfo>();
             _cachedSingletons = new Dictionary<Type, object>();
             _cachedRequests = new Dictionary<Type, object>();
+            _lock = new object();
 
 #if !SILVERLIGHT
             MicroSliverHttpRequestModule.ManageIoC(this);
@@ -205,28 +207,34 @@ namespace MicroSliver
                     }
                     return Get(map.Concrete);
                 case Scope.Singleton:
-                    if (!_cachedSingletons.ContainsKey(T))
+                    lock (_lock)
                     {
-                        if (map.Creator != null)
+                        if (!_cachedSingletons.ContainsKey(T))
                         {
-                            _cachedSingletons.Add(T, map.Creator.Create());
-                        }
-                        else
-                        {
-                            _cachedSingletons.Add(T, Get(map.Concrete));
+                            if (map.Creator != null)
+                            {
+                                _cachedSingletons.Add(T, map.Creator.Create());
+                            }
+                            else
+                            {
+                                _cachedSingletons.Add(T, Get(map.Concrete));
+                            }
                         }
                     }
                     return _cachedSingletons[T];
                 case Scope.Request:
-                    if (!_cachedRequests.ContainsKey(T))
+                    lock (_lock)
                     {
-                        if (map.Creator != null)
+                        if (!_cachedRequests.ContainsKey(T))
                         {
-                            _cachedRequests.Add(T, map.Creator.Create());
-                        }
-                        else
-                        {
-                            _cachedRequests.Add(T, Get(map.Concrete));
+                            if (map.Creator != null)
+                            {
+                                _cachedRequests.Add(T, map.Creator.Create());
+                            }
+                            else
+                            {
+                                _cachedRequests.Add(T, Get(map.Concrete));
+                            }
                         }
                     }
                     return _cachedRequests[T];
@@ -237,11 +245,14 @@ namespace MicroSliver
 
         private void CacheCtorInfo(Type T)
         {
-            if (!_cachedCtors.ContainsKey(T))
+            lock (_lock)
             {
-                var concreteCtor = T.GetConstructors()[0];
-                var concreteCtorParams = concreteCtor.GetParameters();
-                _cachedCtors.Add(T, new CtorInfo(concreteCtor, concreteCtorParams));
+                if (!_cachedCtors.ContainsKey(T))
+                {
+                    var concreteCtor = T.GetConstructors()[0];
+                    var concreteCtorParams = concreteCtor.GetParameters();
+                    _cachedCtors.Add(T, new CtorInfo(concreteCtor, concreteCtorParams));
+                }
             }
         }
 
