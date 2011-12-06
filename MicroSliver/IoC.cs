@@ -87,10 +87,12 @@ namespace MicroSliver
         public void UnMap<TContract>()
         {
             var contract = typeof(TContract);
-
-            if (_mappings.ContainsKey(contract))
+            lock (_lock)
             {
-                _mappings.Remove(contract);
+                if (_mappings.ContainsKey(contract))
+                {
+                    _mappings.Remove(contract);
+                }
             }
         }
 
@@ -100,9 +102,12 @@ namespace MicroSliver
         public IMap GetMap<TContract>()
         {
             var contract = typeof(TContract);
-            if (_mappings.ContainsKey(contract))
+            lock (_lock)
             {
-                return _mappings[contract];
+                if (_mappings.ContainsKey(contract))
+                {
+                    return _mappings[contract];
+                }
             }
             throw new Exception("MicroSliver is unable to find a mapping for interface of type " + contract.Name + ".");
         }
@@ -142,29 +147,35 @@ namespace MicroSliver
         {
             var contract = typeof(TContract);
             var concrete = typeof(TConcrete);
-            if (!_mappings.ContainsKey(contract))
+            lock (_lock)
             {
-                _mappings[contract] = new Map(concrete);
+                if (!_mappings.ContainsKey(contract))
+                {
+                    _mappings[contract] = new Map(concrete);
+                }
+                else
+                {
+                    throw new Exception("A mapping for interface of type " + contract.Name + " already exists.  MicroSliver does not allow for multiple bindings of the same type.");
+                }
+                return _mappings[contract];
             }
-            else
-            {
-                throw new Exception("A mapping for interface of type " + contract.Name + " already exists.  MicroSliver does not allow for multiple bindings of the same type.");
-            }
-            return _mappings[contract];
         }
 
         private IMap AddMap<TContract>(ICreator creator)
         {
             var contract = typeof(TContract);
-            if (!_mappings.ContainsKey(contract))
+            lock (_lock)
             {
-                _mappings[contract] = new Map(null, creator);
+                if (!_mappings.ContainsKey(contract))
+                {
+                    _mappings[contract] = new Map(null, creator);
+                }
+                else
+                {
+                    throw new Exception("A mapping for interface of type " + contract.Name + " already exists.  MicroSliver does not allow for multiple bindings of the same type.");
+                }
+                return _mappings[contract];
             }
-            else
-            {
-                throw new Exception("A mapping for interface of type " + contract.Name + " already exists.  MicroSliver does not allow for multiple bindings of the same type.");
-            }
-            return _mappings[contract];
         }
 
         private object Get(Type T)
