@@ -9,7 +9,7 @@
     <ProjectGuid>{62A7100C-8692-4C03-8C14-5A3A8ACAC66A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MicroSliver.Metro</RootNamespace>
+    <RootNamespace>MicroSliver</RootNamespace>
     <AssemblyName>MicroSliver.Metro</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
