@@ -35,6 +35,10 @@ namespace MicroSliver
         /// </summary>
         void UnMap<TContract>();
         /// <summary>
+        /// Returns true if a mapping exists for type.
+        /// </summary>
+        bool HasMap(Type T);
+        /// <summary>
         /// Clears all mappings and caches.
         /// </summary>
         void Clear();
@@ -50,5 +54,9 @@ namespace MicroSliver
         /// Gets an instance of the object by Type.
         /// </summary>
         object GetByType(Type T);
+        /// <summary>
+        /// Gets an instance of the object by Type if exists, otherwise null.
+        /// </summary>
+        object TryGetByType(Type T);
     }
 }
