@@ -82,6 +82,21 @@ namespace MicroSliver
         }
 
         /// <summary>
+        /// Gets an instance of the object by Type if exists, otherwise null.
+        /// </summary>
+        public object TryGetByType(Type T)
+        {
+            try
+            {
+                return Get(T);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Removes a specific mapping.
         /// </summary>
         public void UnMap<TContract>()
@@ -110,6 +125,15 @@ namespace MicroSliver
                 }
             }
             throw new Exception("MicroSliver is unable to find a mapping for interface of type " + contract.Name + ".");
+        }
+
+
+        /// <summary>
+        /// Returns true if a mapping exists for type.
+        /// </summary>
+        public bool HasMap(Type T)
+        {
+            return _mappings.ContainsKey(T);
         }
 
         /// <summary>

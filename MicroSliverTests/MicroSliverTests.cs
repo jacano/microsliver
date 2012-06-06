@@ -187,6 +187,26 @@ namespace TestProject1
         }
 
         [TestMethod]
+        public void TestHasMapping()
+        {
+            var ioc = new IoC();
+            ioc.Map<IDependencyA, ClassDependencyA>();
+
+            Assert.AreEqual(true, ioc.HasMap(typeof(IDependencyA)));
+            Assert.AreEqual(false, ioc.HasMap(typeof(IDependencyB)));
+        }
+
+        [TestMethod]
+        public void TestTryGetByType()
+        {
+            var ioc = new IoC();
+            ioc.Map<IDependencyA, ClassDependencyA>();
+
+            Assert.AreNotEqual(null, ioc.TryGetByType(typeof(IDependencyA)));
+            Assert.AreEqual(null, ioc.TryGetByType(typeof(IDependencyB)));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(System.Exception))]
         public void TestClassWithPrimitiveValues()
         {
