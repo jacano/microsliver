@@ -1,10 +1,4 @@
-﻿// 
-// Author: Jeremiah Billmann <jbillmann@gmail.com>
-// Copyright (c) 2011
-// 
-// Licensed under the Microsoft Public License (Ms-PL).
-// 
-using System;
+﻿using System;
 using System.ServiceModel.DomainServices.Server;
 
 namespace MicroSliver.Web.Extensions
@@ -30,7 +24,7 @@ namespace MicroSliver.Web.Extensions
         /// </summary>
         public DomainService CreateDomainService(Type domainServiceType, DomainServiceContext context)
         {
-            DomainService domainService = (DomainService)IoC.GetByType(domainServiceType);
+            var domainService = (DomainService)IoC.GetByType(domainServiceType);
 
             if (domainService != null)
             {

@@ -1,10 +1,4 @@
-﻿// 
-// Author: Jeremiah Billmann <jbillmann@gmail.com>
-// Copyright (c) 2011
-// 
-// Licensed under the Microsoft Public License (Ms-PL).
-// 
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -90,7 +84,7 @@ namespace MicroSliver
             {
                 return Get(T);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

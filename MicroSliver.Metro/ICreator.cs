@@ -1,10 +1,4 @@
-﻿// 
-// Author: Jeremiah Billmann <jbillmann@gmail.com>
-// Copyright (c) 2011
-// 
-// Licensed under the Microsoft Public License (Ms-PL).
-// 
-namespace MicroSliver
+﻿namespace MicroSliver
 {
     /// <summary>
     /// Provides a class to control object instantiation.

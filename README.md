@@ -34,3 +34,8 @@ Features
 - RIA Services Support! Extension to inject custom domain services!
 - ASP.NET MVC Support!  Extension to inject controllers!
 - SignalR Support! Dependency Resolver to inject hubs!
+
+License
+-------
+
+MIT License

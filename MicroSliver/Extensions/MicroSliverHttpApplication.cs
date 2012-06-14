@@ -1,10 +1,4 @@
-﻿// 
-// Author: Jeremiah Billmann <jbillmann@gmail.com>
-// Copyright (c) 2011
-// 
-// Licensed under the Microsoft Public License (Ms-PL).
-// 
-using System;
+﻿using System;
 using System.Web;
 using System.Web.Mvc;
 

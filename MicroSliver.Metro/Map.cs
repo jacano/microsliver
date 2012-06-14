@@ -1,10 +1,4 @@
-﻿// 
-// Author: Jeremiah Billmann <jbillmann@gmail.com>
-// Copyright (c) 2011
-// 
-// Licensed under the Microsoft Public License (Ms-PL).
-// 
-using System;
+﻿using System;
 
 namespace MicroSliver
 {
@@ -52,21 +46,21 @@ namespace MicroSliver
         /// </summary>
         public void ToSingletonScope()
         {
-            Scope = MicroSliver.Scope.Singleton;
+            Scope = Scope.Singleton;
         }
         /// <summary>
         /// Sets life cycle of the mapping to a non-permanent scope.
         /// </summary>
         public void ToInstanceScope()
         {
-            Scope = MicroSliver.Scope.Instance;
+            Scope = Scope.Instance;
         }
         /// <summary>
         /// Sets life cycle of the mapping to a web request scope.
         /// </summary>
         public void ToRequestScope()
         {
-            Scope = MicroSliver.Scope.Request;
+            Scope = Scope.Request;
         }
 
     }
