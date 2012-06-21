@@ -105,10 +105,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Content Include="License.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="CtorInfo.cs" />
     <Compile Include="ICreator.cs" />
     <Compile Include="ICtorInfo.cs" />
@@ -116,6 +112,7 @@
     <Compile Include="IMap.cs" />
     <Compile Include="IoC.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Extensions\MicroSliverViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
